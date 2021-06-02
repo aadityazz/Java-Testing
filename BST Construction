@@ -1,0 +1,55 @@
+public class test {
+
+     private class Node {
+         int data;
+         Node left;
+         Node right;
+     }
+
+     private Node root;
+
+     public test(int[] arr){
+         this.root = construct(arr, 0, arr.length-1);
+     }
+
+     private Node construct(int[] arr, int l, int h){
+
+         if(l>h){
+             return null;
+         }
+
+         int mid = (l+h)/2;
+
+         Node nn = new Node();
+         nn.data=arr[mid];
+
+         nn.left = construct(arr, l, mid-1);
+         nn.right = construct(arr, mid+1, h);
+         return nn;
+     }
+
+     public void display(){
+         display(this.root);
+     }
+
+     public void display(Node node){
+         String str ="";
+
+         if(node.left == null){
+             str +=".";
+         }else{
+             str += node.left.data;
+         }
+         str += " -> "+ node.data +" <- ";
+
+         if(node.right == null){
+             str +=".";
+         }else{
+             str += node.right.data;
+         }
+         display(node.left);
+         display(node.right);
+
+         System.out.println(str);
+     }
+}
