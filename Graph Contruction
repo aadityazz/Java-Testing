@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Main {
+public class Graph {
 
     private class Vertex {
         HashMap<String, Integer> nbrs = new HashMap<>();
@@ -9,7 +9,7 @@ public class Main {
 
     HashMap<String, Vertex> vtces;
 
-    public Main(){
+    public Graph(){
         vtces = new HashMap<>();
     }
 
@@ -49,7 +49,7 @@ public class Main {
         Vertex vtx1 = vtces.get(vname1);
         Vertex vtx2 = vtces.get(vname2);
 
-        if(vtx1 == null || vtx2 == null || vtx1.nbrs.containsKey(vname2)){
+        if(vtx1 == null || vtx2 == null || !vtx1.nbrs.containsKey(vname2)){
             return false;
         }
 
@@ -85,10 +85,12 @@ public class Main {
             Vertex vtx = vtces.get(key);
             System.out.println(key + " : "+ vtx.nbrs);
         }
+
+        System.out.println("---------------------");
     }
 
     public boolean hasPath(String vname1, String vname2, HashMap<String, Boolean> process){
-        process.put((vname1, true))
+        process.put(vname1, true);
         if(containsEdge(vname1, vname2)){
             return true;
         }
