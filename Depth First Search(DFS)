@@ -1,0 +1,58 @@
+// Depth First Search(dfs)
+    
+    private class Pair{
+        String vname;
+        String psf;
+    }
+    
+    public boolean dfs(String src, String dst){
+
+        HashMap<String, Boolean> process = new HashMap<>();
+        LinkedList<Pair> stack = new LinkedList<>();
+
+        Pair sp = new Pair();
+        sp.vname = src;
+        sp.psf = src;
+
+        // put the new pair in queue
+        stack.addFirst(sp);
+
+        //wile stack is not empty keep on doing the work
+        while(!stack.isEmpty()){
+
+            //remove a pair from stack
+            Pair rp = stack.removeFirst();
+
+            if(process.containsKey(rp.vname)){
+                continue;
+            }
+
+            //processed put
+            process.put(rp.vname, true);
+
+            //DirectEdge
+            if(containsEdge(rp.vname, dst)){
+                System.out.println(rp.psf + dst);
+                return true;
+            }
+
+            //nbrs
+            Vertex rpvtx = vtces.get(rp.vname);
+            ArrayList<String> nbrs = new ArrayList<>(rpvtx.nbrs.keySet());
+
+            for(String nbr : nbrs){
+
+                //process only unprocessed nbrs
+                if(!process.containsKey(nbr)){
+
+                    //make a new pair of nbr and put in stack
+                    Pair np = new Pair();
+                    np.vname = nbr;
+                    np.psf = rp.psf + nbr;
+
+                    stack.addFirst(np);
+                }
+            }
+        }
+        return false;
+    }
