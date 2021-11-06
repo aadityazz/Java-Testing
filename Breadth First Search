@@ -32,6 +32,7 @@
 
             //DirectEdge
             if(containsEdge(rp.vname, dst)){
+                System.out.println(rp.psf + dst);
                 return true;
             }
 
