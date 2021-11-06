@@ -1,0 +1,57 @@
+    //Breadth First Search (BSF) Algorithm.
+
+    private class Pair{
+        String vname;
+        String psf;
+    }
+
+    public boolean bfs(String src, String dst){
+
+        HashMap<String, Boolean> process = new HashMap<>();
+        LinkedList<Pair> queue = new LinkedList<>();
+
+        Pair sp = new Pair();
+        sp.vname = src;
+        sp.psf = src;
+
+        // put the new pair in queue
+        queue.addLast(sp);
+
+        //wile queue is not empty keep on doing the work
+        while(!queue.isEmpty()){
+
+            //remove a pair from queue
+            Pair rp = queue.removeFirst();
+            
+            if(process.containsKey(rp.vname)){
+                continue;
+            }
+            
+            //processed put
+            process.put(rp.vname, true);
+
+            //DirectEdge
+            if(containsEdge(rp.vname, dst)){
+                return true;
+            }
+
+            //nbrs
+            Vertex rpvtx = vtces.get(rp.vname);
+            ArrayList<String> nbrs = new ArrayList<>(rpvtx.nbrs.keySet());
+
+            for(String nbr : nbrs){
+
+                //process only unprocessed nbrs
+                if(!process.containsKey(nbr)){
+
+                    //make a new pair of nbr and put in queue
+                    Pair np = new Pair();
+                    np.vname = nbr;
+                    np.psf = rp.psf + nbr;
+
+                    queue.addLast(np);
+                }
+            }
+        }
+        return false;
+    }
